@@ -1,6 +1,6 @@
-const { app,input } = require('@azure/functions');
+const { app,output } = require('@azure/functions');
 
-const cosmosOutput = input.cosmosDB({
+const cosmosOutput = output.cosmosDB({
     databaseName: 'DemoDatabase',
     containerName: 'Items',
     connection: 'CosmosDB',
@@ -9,7 +9,7 @@ const cosmosOutput = input.cosmosDB({
 app.http('postItems', {
     methods: ['POST'],
     authLevel: 'anonymous',
-    extraInputs: [cosmoOutput],
+    extraOutputs: [cosmosOutput],
     route: 'items/post',
     handler: async (request, context) => {
     const newItem = await request.json();
